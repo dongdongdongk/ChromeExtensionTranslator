@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스파르타 암기 번역기</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            max-width: 1000px;
+            min-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        textarea {
+            width: calc(100% - 40px);
+            height: 100px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #outputText {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>스파르타 암기 번역기</h1>
+        <textarea id="inputText" placeholder="Enter text to translate..."></textarea>
+        <!-- <button id="translateButton">Translate</button> -->
+        <button id="translateButton">단어 시험 시작</button>
+        <button id="stopTestButton">단어 시험 종료</button>
+        <div id="outputText"></div>
+        
+    </div>
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

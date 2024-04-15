@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Modal</title>
+  <style>
+    /* 모달 스타일 */
+    .modal {
+      display: none; /* 기본적으로 숨겨짐 */
+      position: fixed; /* 고정 위치 */
+      z-index: 1; /* 다른 요소 위에 표시됨 */
+      left: 0;
+      top: 0;
+      width: 100%; /* 전체 너비 */
+      height: 100%; /* 전체 높이 */
+      overflow: auto; /* 스크롤 가능 */
+      background-color: rgba(0,0,0,0.4); /* 배경색과 투명도 */
+    }
+
+    /* 모달 내용 스타일 */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 가운데 정렬 */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    /* 모달 닫기 버튼 스타일 */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    /* 모달 닫기 버튼 호버 효과 */
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="myModal" class="modal">
+  <!-- 모달 내용 -->
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h1>번역 시험</h1>
+    <div id="testContainer">
+      <!-- 시험 내용이 여기에 표시됩니다. -->
+    </div>
+    <button id="submitButton" onclick="submitTest()">시험 제출</button>
+  </div>
+</div>
+
+<script>
+  // 시험 데이터를 가져오는 함수
+  function getTestContent() {
+    // 시험 내용을 가져와서 표시하는 코드
+  }
+
+  // 시험 제출 함수
+  function submitTest() {
+    // 시험 결과를 처리하는 코드
+  }
+
+  // 모달 창을 닫는 함수
+  function closeModal() {
+    document.getElementById('myModal').style.display = 'none';
+  }
+
+  // 탭이 로드되면 시험 데이터를 가져와서 화면에 표시합니다.
+  document.addEventListener("DOMContentLoaded", function() {
+    getTestContent();
+  });
+</script>
+
+</body>
+</html>

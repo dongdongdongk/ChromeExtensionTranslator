@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css">
+    <title>영단어 테스트</title>
+    <style>
+        /* 추가적인 스타일링 */
+        .question-container {
+            margin-bottom: 15px;
+        }
+
+        .question-label {
+            margin-right: 10px;
+        }
+
+        #submit-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="test-container p-4 border rounded-3 bg-light">
+                    <h1 class="mb-4">영단어 테스트</h1>
+                    <p>아래에 단어의 뜻을 입력해주세요.</p>
+                    <div id="test-container">
+                        <!-- 테스트 내용이 여기에 출력됩니다 -->
+                    </div>
+                    <button id="submit-button" class="btn btn-primary mt-3">제출</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="testpop.js"></script>
+</body>
+</html>
