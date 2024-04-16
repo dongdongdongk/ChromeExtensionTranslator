@@ -16,21 +16,38 @@ function loadStorageData() {
   );
 }
 
-// 저장된 번역 데이터를 화면에 표시하는 함수입니다.
 function displayStorageData(data) {
   // 출력을 위한 div 요소를 id를 통해 찾습니다.
   const outputDiv = document.getElementById("outputText");
   outputDiv.innerHTML = ""; // 출력 div를 초기화합니다. 기존의 내용을 지웁니다.
 
+  // 부트스트랩 리스트 그룹을 생성합니다.
+  const listGroup = document.createElement("ul");
+  listGroup.classList.add("list-group");
+
   // 데이터 배열을 순회하면서 각 번역 데이터를 화면에 표시합니다.
   data.forEach((item) => {
-    // 새로운 div 요소를 생성합니다. 이 div는 각 번역 데이터를 표시하기 위한 것입니다.
-    const row = document.createElement("div");
-    // 생성된 div에 원문과 번역문을 포함하는 문자열을 설정합니다.
-    row.innerHTML = `단어: ${item.originalText}, 뜻: ${item.translatedText}`;
-    // 최종적으로 생성된 div를 출력 div에 자식 요소로 추가합니다.
-    outputDiv.appendChild(row);
+    // 새로운 리스트 아이템 요소를 생성합니다. 이는 각 번역 데이터를 표시하기 위한 것입니다.
+    const listItem = document.createElement("li");
+    listItem.classList.add(
+      "list-group-item",
+      "d-flex",
+      "justify-content-between",
+      "align-items-center"
+    );
+
+    // 원문과 번역문을 포함하는 문자열을 설정합니다.
+    listItem.innerHTML = `
+      <div class="fw-bold">단어: ${item.originalText}</div>
+      <span class="text-muted">뜻: ${item.translatedText}</span>
+    `;
+
+    // 최종적으로 생성된 리스트 아이템을 리스트 그룹에 자식 요소로 추가합니다.
+    listGroup.appendChild(listItem);
   });
+
+  // 최종적으로 생성된 리스트 그룹을 출력 div에 자식 요소로 추가합니다.
+  outputDiv.appendChild(listGroup);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -51,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (intervalId) {
       clearInterval(intervalId);
       // "단어 시험을 멈춥니다!" 메시지를 출력합니다.
-      alert("단어 시험을 멈춥니다!")
+      alert("단어 시험을 멈춥니다!");
     }
   });
 });

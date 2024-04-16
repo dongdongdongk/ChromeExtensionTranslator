@@ -16,7 +16,7 @@ function translateSelectedText() {
 // 텍스트를 번역하는 함수
 function translateText(text) {
   // 'YOUR_API_KEY'를 실제 API 키로 대체
-  const apiKey = process.env.MY_API_KEY;
+  const apiKey = "뭘봐";
   const targetLanguage = "ko"; // 대상 언어 코드로 변경
 
   // 번역 API에 요청 보내기
@@ -75,16 +75,19 @@ function displayTranslation(originalText, translatedText) {
     translationDiv.style.padding = "5px";
     translationDiv.style.zIndex = "9999";
 
-    // 스타일을 적용할 음성 출력 버튼 요소 생성 및 스타일링
-    const voiceButton = document.createElement("button");
-    voiceButton.innerText = "음성 출력";
-    voiceButton.classList.add("btn", "btn-secondary", "me-2"); // 부트스트랩 클래스 추가
+    // 음성 출력 이미지 요소 생성 및 스타일링
+    const voiceButton = document.createElement("img");
+    voiceButton.setAttribute(
+      "src",
+      chrome.runtime.getURL("/images/icons8-sound-48.png")
+    ); // 이미지 파일 경로 설정
+    voiceButton.setAttribute("alt", "음성 출력");
+    voiceButton.style.cursor = "pointer"; // 커서를 포인터로 설정하여 클릭 가능함을 나타냄
+    voiceButton.style.width = "28px"; // 이미지 너비 설정
+    voiceButton.style.height = "28px"; // 이미지 높이 설정
     voiceButton.style.marginLeft = "8px";
-    voiceButton.style.marginRight = "5px"; // 우측 마진 설정
-    voiceButton.style.backgroundColor = "#007bff"; // 배경색 설정
-    voiceButton.style.color = "#fff"; // 텍스트 색상 설정
-    voiceButton.style.border = "1px solid #007bff"; // 테두리 설정
-    voiceButton.style.borderRadius = "5px"; // 테두리 반경 설정
+    voiceButton.style.marginRight = "5px";
+
     // 이벤트 리스너 추가
     voiceButton.addEventListener("click", () => {
       // 음성 출력 버튼 클릭 시 음성 출력 함수 호출
@@ -173,7 +176,10 @@ function isEnglishWordOrIdiom(text) {
 // 선택된 텍스트가 변경될 때마다 번역 실행
 document.addEventListener("mouseup", function (event) {
   const selectedText = window.getSelection().toString().trim();
-  if (isEnglishWordOrIdiom(selectedText) && selectedText.length <= MAX_TEXT_LENGTH) {
+  if (
+    isEnglishWordOrIdiom(selectedText) &&
+    selectedText.length <= MAX_TEXT_LENGTH
+  ) {
     translateSelectedText();
   } else {
     // 선택된 텍스트가 영어 숙어 또는 단어가 아니거나 길이가 너무 긴 경우, 번역된 상자 제거

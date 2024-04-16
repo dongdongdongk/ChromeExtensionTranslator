@@ -40,7 +40,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["/vendor/bootstrap/*"],
+      "resources": ["/vendor/bootstrap/*","/images/icons8-sound-48.png"],
       "matches": ["<all_urls>"]
     }
   ]
