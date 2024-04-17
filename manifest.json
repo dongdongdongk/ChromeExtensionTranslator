@@ -4,7 +4,7 @@
   "version": "1.0",
 
   "description": "학습자가 영단어를 빡세게, 무조건적으로 외울 수 있도록 설계된 암기 시험 기반의 영단어 번역기입니다!",
-  "permissions": ["storage", "scripting","activeTab", "windows"],
+  "permissions": ["storage", "scripting","activeTab", "windows","alarms"],
   "host_permissions": [
     "*://*.googleapis.com/",
     "*://*.gstatic.com/",
@@ -36,7 +36,7 @@
     "service_worker": "background.js"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;"
   },
   "web_accessible_resources": [
     {

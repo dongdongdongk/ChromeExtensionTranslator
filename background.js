@@ -68,29 +68,63 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 });
 
-// 1분 후에 test-popup.html을 열도록 타이머 설정
-// setTimeout(openTestPopup, 10000); // 1분 후에 test-popup.html 열기
+// chrome.alarms.create("modalPopupAlarm", { periodInMinutes: 1 / 6 });
 
-function openTestPopup() {
-    // 팝업 창의 너비와 높이
-    const popupWidth = 800;
-    const popupHeight = 800;
-
-    // 현재 활성화된 창의 정보를 얻어온 후 팝업의 위치 계산
-    chrome.windows.getCurrent(function(currentWindow) {
-        // 현재 활성화된 창의 중앙에 팝업을 위치시키기 위한 계산
-        const left = Math.round((currentWindow.width - popupWidth) / 2 + currentWindow.left);
-        const top = Math.round((currentWindow.height - popupHeight) / 2 + currentWindow.top);
-
-        // 팝업을 엽니다.
-        chrome.windows.create({
-            url: "test-popup.html",
-            type: "popup",
-            width: popupWidth,
-            height: popupHeight,
-            left: left,
-            top: top
-        });
+// 시험 시작 알람
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === "modalPopupAlarm") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, { action: "showModal" });
     });
-}
-  
+  }
+});
+
+// 시험 멈추기
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.action === "stopAlarm") {
+    chrome.alarms.clear("modalPopupAlarm", function (wasCleared) {
+      if (wasCleared) {
+        // delayInMinutes 값을 chrome.storage에서 삭제
+        chrome.storage.local.remove('delayInMinutes', function() {
+          console.log('delayInMinutes 설정이 삭제되었습니다.');
+        });
+      } else {
+        console.log("알람 중단에 실패했습니다.");
+      }
+    });
+  }
+});
+
+// 시험 재시작 하기
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  if (message.action === "retryTestAlarm") {
+    const delay = parseInt(message.delay, 10); // 문자열을 정수로 변환, 10진법으로 변환
+
+    // delay 값을 분 단위로 변환하여 알람 생성
+    // delay가 문자열로 전달되어 이를 분 단위로 파싱합니다. 
+    // parseInt로 10진수 정수로 변환한 뒤, delayInMinutes 변수에 저장합니다.
+    const delayInMinutes = delay;
+
+    // chrome.alarms.create를 사용하여 알람을 설정합니다.
+    // 첫 번째 매개변수는 알람 이름입니다. 여기서는 재사용성을 위해 알람 이름을 동적으로 생성하였습니다.
+    // 두 번째 매개변수에는 when 옵션을 사용하여 현재 시간으로부터 delayInMinutes 분 후를 알람 시간으로 설정합니다.
+    chrome.alarms.create("startTestAlarm", { delayInMinutes: delayInMinutes });
+    // 응답을 보냅니다. 여기서는 특별한 데이터를 보낼 필요가 없으므로 빈 객체를 전달합니다.
+    sendResponse({});
+  }
+});
+
+// 알람 리스너 설정
+// chrome.alarms.onAlarm.addListener를 사용하여 알람이 울릴 때 실행될 콜백 함수를 정의합니다.
+// 이 콜백 함수는 알람 정보를 매개변수로 받습니다.
+chrome.alarms.onAlarm.addListener((alarm) => {
+  // 알람 이름이 "startTestAlarm"인 경우에만 아래 로직을 실행합니다.
+  // 이 조건을 통해 다른 알람에 의한 실행을 방지합니다.
+  if (alarm.name === "startTestAlarm") {
+    // 현재 활성화된 탭을 조회합니다. { active: true, currentWindow: true } 옵션을 사용하여 현재 창의 활성 탭을 찾습니다.
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      // 찾은 탭에 메시지를 보냅니다. 여기서는 "showModal" 액션을 전달하여 모달을 표시하도록 합니다.
+      chrome.tabs.sendMessage(tabs[0].id, { action: "showModal" });
+    });
+  }
+});
