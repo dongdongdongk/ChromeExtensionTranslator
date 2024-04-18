@@ -28,7 +28,7 @@ function translateSelectedText() {
 // 텍스트를 번역하는 함수
 function translateText(text) {
   // 'YOUR_API_KEY'를 실제 API 키로 대체
-  const apiKey = "왜? 뭘보냐?";
+  const apiKey = "뭐";
   const targetLanguage = "ko"; // 대상 언어 코드로 변경
 
   // 번역 API에 요청 보내기
