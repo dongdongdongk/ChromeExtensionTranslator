@@ -28,7 +28,7 @@ function translateSelectedText() {
 // 텍스트를 번역하는 함수
 function translateText(text) {
   // 'YOUR_API_KEY'를 실제 API 키로 대체
-  const apiKey = "뭐";
+  const apiKey = "뭘봐";
   const targetLanguage = "ko"; // 대상 언어 코드로 변경
 
   // 번역 API에 요청 보내기
@@ -376,14 +376,32 @@ function retryTest(data, modal, overlay) {
 
 // displayTest 함수는 저장된 번역 데이터를 기반으로 영단어 테스트의 UI를 생성하고 모달에 추가
 function displayTest(data, modal, overlay) {
+  const modalContent = document.createElement("div");
+  modalContent.style.cssText = `
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+  // 헤더 생성 및 스타일 설정
+  const modalHeader = document.createElement("div");
+  modalHeader.style.cssText =
+    "background-color: #667eea; padding: 20px; display: flex; justify-content: center; align-items: center; color: #FFFFFF; font-size: 20px; border-radius: 5px";
+
+  const modalTitle = document.createElement("h2");
+  modalTitle.textContent = "스파르타 암기 번역기";
+  modalHeader.appendChild(modalTitle);
+
+  modalContent.appendChild(modalHeader);
+
   const testContainer = document.createElement("div");
   testContainer.style.cssText = `
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f8f9fa;
-    margin-bottom: 20px;
-  `;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  overflow-y: auto;
+`;
 
   const testTitle = document.createElement("h2");
   testTitle.textContent = "영단어 테스트";
@@ -406,13 +424,13 @@ function displayTest(data, modal, overlay) {
     const answerInput = document.createElement("input");
     answerInput.setAttribute("type", "text");
     answerInput.style.cssText = `
-    display: block;
-    width: calc(100% - 16px);
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+      display: block;
+      width: calc(100% - 16px);
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
     `;
     answerInput.dataset.original = item.originalText;
     questionContainer.appendChild(answerInput);
@@ -420,39 +438,62 @@ function displayTest(data, modal, overlay) {
     testContainer.appendChild(questionContainer);
   });
 
+  const buttonContainer = document.createElement("div");
+  buttonContainer.style.cssText = "display: flex; justify-content: flex-end;";
+
   const submitButton = document.createElement("button");
   submitButton.textContent = "제출";
   submitButton.style.cssText = `
     display: inline-block;
-    background-color: #007bff;
-    color: white;
+    background-color: #667eea; /* 기본 배경색 */
+    color: #ffffff;
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
-    margin-right: 10px; /* 제출 버튼과 닫기 버튼 간의 간격 조정 */
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
   `;
+
+  // 마우스가 버튼 위에 있을 때 배경색 변경
+  submitButton.addEventListener("mouseover", function () {
+    submitButton.style.backgroundColor = "#5a67d8"; // 호버 시 배경색
+  });
+
+  // 마우스가 버튼에서 벗어날 때 원래 배경색으로 복원
+  submitButton.addEventListener("mouseout", function () {
+    submitButton.style.backgroundColor = "#667eea"; // 기본 배경색
+  });
+
   submitButton.addEventListener("click", function () {
     submitTest(data, modal, overlay);
-    submitButton.style.display = "none"; // 제출 버튼 숨기기
-    closeButton.style.display = "inline-block"; // 닫기 버튼 표시하기
+    submitButton.style.display = "none";
   });
-  testContainer.appendChild(submitButton);
+  buttonContainer.appendChild(submitButton);
 
-  // 닫기 버튼
   const closeButton = document.createElement("button");
   closeButton.textContent = "닫기";
   closeButton.style.cssText = `
-    display: inline-block; /* 기본적으로 표시 */
-    background-color: #dc3545;
-    color: white;
+    display: none; /* 초기에는 숨김 */
+    background-color: #667eea; /* 기본 배경색 */
+    color: #ffffff;
     padding: 8px 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
+    transition: background-color 0.3s ease;
   `;
+
+  // 마우스가 버튼 위에 있을 때 배경색 변경
+  closeButton.addEventListener("mouseover", function () {
+    closeButton.style.backgroundColor = "#5a67d8"; // 호버 시 배경색
+  });
+
+  // 마우스가 버튼에서 벗어날 때 원래 배경색으로 복원
+  closeButton.addEventListener("mouseout", function () {
+    closeButton.style.backgroundColor = "#667eea"; // 기본 배경색
+  });
+
   closeButton.addEventListener("click", function () {
     modal.remove();
     overlay.remove(); // 배경 제거
@@ -467,9 +508,23 @@ function displayTest(data, modal, overlay) {
       });
     });
   });
-  testContainer.appendChild(closeButton);
+  buttonContainer.appendChild(closeButton);
 
-  modal.appendChild(testContainer);
+  testContainer.appendChild(buttonContainer);
+  modalContent.appendChild(testContainer);
+
+  // 푸터 생성
+  const modalFooter = document.createElement("div");
+  modalFooter.style.cssText =
+    "background-color: #667eea; padding: 5px; display: flex; justify-content: center; align-items: center; color: #FFFFFF; border-radius: 5px";
+  const modalFooterTitle = document.createElement("h3");
+  modalFooterTitle.textContent = "© 2024 AHA Music";
+
+  modalFooter.appendChild(modalFooterTitle);
+
+  modalContent.appendChild(modalFooter);
+
+  modal.appendChild(modalContent);
 }
 
 // submitTest 함수는 사용자가 제출한 테스트를 처리하고 결과를 출력
@@ -489,13 +544,28 @@ function submitTest(data, modal, overlay) {
 
 // evaluateTest 함수는 사용자의 답변을 평가하고 결과를 출력
 function evaluateTest(data, answers, modal, overlay) {
+  const modalContent = document.createElement("div");
+  modalContent.style.cssText =
+    "display: flex; flex-direction: column; height: 100%;";
+
+  // 헤더 생성 및 스타일 설정
+  const modalHeader = document.createElement("div");
+  modalHeader.style.cssText =
+    "background-color: #667eea; padding: 20px; display: flex; justify-content: center; align-items: center; color: #FFFFFF; font-size: 20px; border-radius: 5px";
+
+  const modalTitle = document.createElement("h2");
+  modalTitle.textContent = "스파르타 암기 번역기";
+  modalHeader.appendChild(modalTitle);
+
+  modalContent.appendChild(modalHeader);
+
   const testContainer = document.createElement("div");
   testContainer.style.cssText = `
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f8f9fa;
-    margin-bottom: 20px;
+    flex-grow: 1; /* 헤더와 푸터 사이의 공간을 채우도록 설정 */
   `;
 
   const testTitle = document.createElement("h2");
@@ -546,10 +616,12 @@ function evaluateTest(data, answers, modal, overlay) {
     questionContainer.appendChild(answerInput);
 
     // 오답인 경우 정답 메시지 추가
+    // 오답인 경우 정답 메시지 추가
     if (userAnswer !== correctAnswer) {
       const wrongMessage = document.createElement("span");
       wrongMessage.textContent = `틀렸습니다. 정답은 "${correctAnswer}"입니다.`;
       wrongMessage.style.color = "#dc3545"; // 빨간색 텍스트
+      wrongMessage.style.marginTop = "10px"; // 위쪽과의 거리 추가
       questionContainer.appendChild(wrongMessage);
     }
 
@@ -601,15 +673,27 @@ function evaluateTest(data, answers, modal, overlay) {
   retryButton.textContent = "재시험";
   retryButton.style.cssText = `
   display: inline-block;
-  background-color: #007bff;
-  color: white;
+  background-color: #667eea; /* 기본 배경색 */
+  color: #ffffff;
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
   margin-right: 10px;
-`;
+  transition: background-color 0.3s ease;
+  `;
+
+  // 마우스가 버튼 위에 있을 때 배경색 변경
+  retryButton.addEventListener("mouseover", function () {
+    retryButton.style.backgroundColor = "#5a67d8"; // 호버 시 배경색
+  });
+
+  // 마우스가 버튼에서 벗어날 때 원래 배경색으로 복원
+  retryButton.addEventListener("mouseout", function () {
+    retryButton.style.backgroundColor = "#667eea"; // 기본 배경색
+  });
+
   retryButton.addEventListener("click", function () {
     // 재시험 버튼 클릭 시 재시험 함수 호출
     retryTest(data, modal, overlay);
@@ -623,16 +707,27 @@ function evaluateTest(data, answers, modal, overlay) {
   const closeTestButton = document.createElement("button");
   closeTestButton.textContent = "닫기";
   closeTestButton.style.cssText = `
-        display: inline-block;
-        background-color: #dc3545;
-        color: white;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 10px;
-        margin-right: 10px;
-      `;
+  display: inline-block;
+  background-color: #667eea; /* 기본 배경색 */
+  color: #ffffff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  `;
+
+  // 마우스가 버튼 위에 있을 때 배경색 변경
+  closeTestButton.addEventListener("mouseover", function () {
+    closeTestButton.style.backgroundColor = "#5a67d8"; // 호버 시 배경색
+  });
+
+  // 마우스가 버튼에서 벗어날 때 원래 배경색으로 복원
+  closeTestButton.addEventListener("mouseout", function () {
+    closeTestButton.style.backgroundColor = "#667eea"; // 기본 배경색
+  });
 
   closeTestButton.addEventListener("click", function () {
     // 모달과 오버레이 제거
@@ -656,16 +751,27 @@ function evaluateTest(data, answers, modal, overlay) {
   const stopTestButton = document.createElement("button");
   stopTestButton.textContent = "시험 중단";
   stopTestButton.style.cssText = `
-      display: inline-block;
-      background-color: #dc3545;
-      color: white;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 10px;
-      margin-right: 10px;
-    `;
+  display: inline-block;
+  background-color: #667eea; /* 기본 배경색 */
+  color: #ffffff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  `;
+
+  // 마우스가 버튼 위에 있을 때 배경색 변경
+  stopTestButton.addEventListener("mouseover", function () {
+    stopTestButton.style.backgroundColor = "#5a67d8"; // 호버 시 배경색
+  });
+
+  // 마우스가 버튼에서 벗어날 때 원래 배경색으로 복원
+  stopTestButton.addEventListener("mouseout", function () {
+    stopTestButton.style.backgroundColor = "#667eea"; // 기본 배경색
+  });
 
   stopTestButton.addEventListener("click", function () {
     // 모달과 오버레이 제거
@@ -677,6 +783,19 @@ function evaluateTest(data, answers, modal, overlay) {
     alert("시험 반복을 중단합니다.");
   });
   testContainer.appendChild(stopTestButton);
+
+  // 푸터 생성
+  const modalFooter = document.createElement("div");
+  modalFooter.style.cssText =
+    "background-color: #667eea; padding: 5px; display: flex; justify-content: center; align-items: center; color: #FFFFFF; border-radius: 5px";
+  const modalFooterTitle = document.createElement("h3");
+  modalFooterTitle.textContent = "© 2024 AHA Music";
+
+  modalFooter.appendChild(modalFooterTitle);
+
+  modalContent.appendChild(modalFooter);
+
+  modal.appendChild(modalContent);
 }
 
 window.onload = function () {

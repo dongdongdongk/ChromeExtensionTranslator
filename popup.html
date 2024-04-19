@@ -5,67 +5,159 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>스파르타 암기 번역기</title>
     <link rel="stylesheet" href="/vendor/bootstrap/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
-        background-color: #f8f9fa;
-        color: #333;
-        font-family: 'Nanum Gothic', sans-serif;
+        background-color: #f0f2f5;
+        color: #424242;
+        font-family: "Noto Sans KR", sans-serif;
       }
+
       .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 80vw;
         max-width: 800px;
-        min-width: 800px;
+        min-width: 600px;
         margin: 0 auto;
         padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
-      h1 {
-        text-align: center;
-        margin-bottom: 30px;
+
+      h1,
+      .card-title {
+        color: #333;
       }
-      .form-group {
-        margin-bottom: 20px;
+
+      .card-body {
+        padding: 30px;
       }
-      textarea {
-        resize: none;
+
+      .greetings-color,
+      .button-color {
+        background-color: #667eea !important;
+        color: #ffffff;
       }
-      button {
-        margin-right: 10px;
+
+      .form-group button:hover,
+      .button-color:hover {
+        background-color: #5a67d8 !important;
       }
-      button:hover {
-        background-color: #0056b3;
-      }
+
       #outputText {
-        margin-top: 20px;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 5px;
-        min-height: 100px;
+        background-color: #e2e8f0;
+        border: none;
+        border-radius: 8px;
+        min-height: 150px;
+        padding: 20px;
+        font-size: 16px;
+      }
+
+      .input-group-text {
+        background-color: #edf2f7;
+        border-right: 2px solid #cbd5e0;
+      }
+
+      .input-box {
+        border: 1px solid #cbd5e0;
+        box-shadow: none;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+
+      .input-box:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      }
+
+      .login-background {
+        background-image: linear-gradient(165deg, #667eea 50%, #ffffff 50%);
+      }
+
+      .btn-danger:hover {
+        background-color: #e53e3e;
+      }
+
+      .card {
+        border-radius: 12px;
+      }
+
+      .radius {
+        border-radius: 15px;
+      }
+
+      .text-center {
+        color: #ffffff;
+      }
+
+      .input-icon i {
+        color: #4a5568;
+      }
+
+      .btn-custom {
+        background-color: #667eea;
+        color: #ffffff;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-custom:hover {
+        background-color: #5a67d8;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <h1>스파르타 암기 번역기</h1>
-      <div id="outputText" class="mb-4">
+      <div class="row col-12">
+        <div class="col-md-12 greetings-color radius">
+          <div class="text-center fs-1 mt-5 mb-3">스파르타 암기 번역기</div>
+          <div class="text-center mb-5 greetings-color">
+            암기를 위한 번역기를 사용해보세요
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <input
-          type="number"
-          id="delayInput"
-          placeholder="테스트 시작 간격 (분)"
-          class="form-control col-6 mb-3"
-        />
-        <button id="startTestButton" class="btn btn-success">
-          단어 시험 시작
-        </button>
-        <button id="stopTestButton" class="btn btn-danger">시험 반복 종료</button>
-        <button id="clearAllButton" class="btn btn-danger">전체 삭제</button>
+
+      <div class="row col-12">
+        <div class="col-lg-12 col-md-12">
+          <div class="card border-0 rounded mb-3 shadow">
+            <div class="card-body">
+              <div id="outputText" class="mb-4"></div>
+                <div class="mb-3 input-group shadow p-2">
+                  <span class="input-group-text input-icon">
+                    <i class="far fa-clock"></i>
+                  </span>
+                  <input
+                    type="number"
+                    class="form-control input-box"
+                    id="delayInput"
+                    placeholder="테스트 시작 간격 (분)"
+                  />
+                </div>
+                <div class="form-group text-center mb-5">
+                  <button class="btn btn-custom me-2" id="startTestButton">
+                    단어 시험 시작
+                  </button>
+                  <button type="button" class="btn btn-custom me-2" id="stopTestButton">
+                    시험 반복 종료
+                  </button>
+                  <button type="button" class="btn btn-custom" id="clearAllButton">
+                    전체 삭제
+                  </button>
+                </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
     <script src="/vendor/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="popup.js"></script>
   </body>
