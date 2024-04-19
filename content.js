@@ -381,6 +381,7 @@ function displayTest(data, modal, overlay) {
   display: flex;
   flex-direction: column;
   height: 100%;
+  justify-content: space-between;
 `;
 
   // 헤더 생성 및 스타일 설정
@@ -401,6 +402,7 @@ function displayTest(data, modal, overlay) {
   border-radius: 5px;
   background-color: #f8f9fa;
   overflow-y: auto;
+  flex-grow: 1;
 `;
 
   const testTitle = document.createElement("h2");
@@ -546,7 +548,7 @@ function submitTest(data, modal, overlay) {
 function evaluateTest(data, answers, modal, overlay) {
   const modalContent = document.createElement("div");
   modalContent.style.cssText =
-    "display: flex; flex-direction: column; height: 100%;";
+    "display: flex; flex-direction: column; height: 100%; justify-content: space-between;"; // 수정된 부분
 
   // 헤더 생성 및 스타일 설정
   const modalHeader = document.createElement("div");
