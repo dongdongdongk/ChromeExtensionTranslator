@@ -112,24 +112,39 @@
       .btn-custom:hover {
         background-color: #5a67d8;
       }
+
+      /* Added styles */
+      .header-section {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px; /* 여기에 원하는 간격 값을 설정하세요 */
+      }
+
+      .content-section {
+        width: 100%;
+        /* padding: 20px; */
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="row col-12">
-        <div class="col-md-12 greetings-color radius">
-          <div class="text-center fs-1 mt-5 mb-3">스파르타 암기 번역기</div>
-          <div class="text-center mb-5 greetings-color">
-            암기를 위한 번역기를 사용해보세요
+      <div class="header-section">
+        <div class="row col-12">
+          <div class="col-md-12 greetings-color radius">
+            <div class="text-center fs-1 mt-5 mb-3">스파르타 암기 번역기</div>
+            <div class="text-center mb-5 greetings-color">
+              암기를 위한 번역기를 사용해보세요
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="row col-12">
-        <div class="col-lg-12 col-md-12">
-          <div class="card border-0 rounded mb-3 shadow">
-            <div class="card-body">
-              <div id="outputText" class="mb-4"></div>
+      <div class="content-section">
+        <div class="row col-12">
+          <div class="col-lg-12 col-md-12">
+            <div class="card border-0 rounded mb-3 shadow">
+              <div class="card-body">
+                <div id="outputText" class="mb-4"></div>
                 <div class="mb-3 input-group shadow p-2">
                   <span class="input-group-text input-icon">
                     <i class="far fa-clock"></i>
@@ -145,13 +160,22 @@
                   <button class="btn btn-custom me-2" id="startTestButton">
                     단어 시험 시작
                   </button>
-                  <button type="button" class="btn btn-custom me-2" id="stopTestButton">
+                  <button
+                    type="button"
+                    class="btn btn-custom me-2"
+                    id="stopTestButton"
+                  >
                     시험 반복 종료
                   </button>
-                  <button type="button" class="btn btn-custom" id="clearAllButton">
+                  <button
+                    type="button"
+                    class="btn btn-custom"
+                    id="clearAllButton"
+                  >
                     전체 삭제
                   </button>
                 </div>
+              </div>
             </div>
           </div>
         </div>

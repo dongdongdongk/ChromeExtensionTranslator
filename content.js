@@ -28,7 +28,7 @@ function translateSelectedText() {
 // 텍스트를 번역하는 함수
 function translateText(text) {
   // 'YOUR_API_KEY'를 실제 API 키로 대체
-  const apiKey = "뭘봐";
+  const apiKey = "";
   const targetLanguage = "ko"; // 대상 언어 코드로 변경
 
   // 번역 API에 요청 보내기
@@ -547,8 +547,10 @@ function submitTest(data, modal, overlay) {
 // evaluateTest 함수는 사용자의 답변을 평가하고 결과를 출력
 function evaluateTest(data, answers, modal, overlay) {
   const modalContent = document.createElement("div");
-  modalContent.style.cssText =
-    "display: flex; flex-direction: column; height: 100%; justify-content: space-between;"; // 수정된 부분
+  modalContent.style.display = "flex";
+  modalContent.style.flexDirection = "column";
+  modalContent.style.height = "100%";
+  modalContent.style.justifyContent = "space-between";
 
   // 헤더 생성 및 스타일 설정
   const modalHeader = document.createElement("div");
@@ -563,12 +565,13 @@ function evaluateTest(data, answers, modal, overlay) {
 
   const testContainer = document.createElement("div");
   testContainer.style.cssText = `
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f8f9fa;
-    flex-grow: 1; /* 헤더와 푸터 사이의 공간을 채우도록 설정 */
-  `;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  overflow-y: auto;
+  flex-grow: 1;
+`;
 
   const testTitle = document.createElement("h2");
   testTitle.textContent = "영단어 테스트";
@@ -593,9 +596,10 @@ function evaluateTest(data, answers, modal, overlay) {
     width: calc(100% - 16px);
     padding: 8px;
     margin-top: 5px;
+    border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    `;
+  `;
 
     // 정답과 비교하여 스타일 및 메시지 설정
     if (userAnswer === correctAnswer) {
