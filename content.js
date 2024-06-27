@@ -28,7 +28,7 @@ function translateSelectedText() {
 // 텍스트를 번역하는 함수
 function translateText(text) {
   // 'YOUR_API_KEY'를 실제 API 키로 대체
-  const apiKey = "";
+  const apiKey = "AIzaSyDYlPibUJbl2viT4sr0-t-tSkqSDpRsm78";
   const targetLanguage = "ko"; // 대상 언어 코드로 변경
 
   // 번역 API에 요청 보내기
@@ -381,6 +381,7 @@ function displayTest(data, modal, overlay) {
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: 90vh;
   justify-content: space-between;
 `;
 
@@ -798,8 +799,11 @@ function evaluateTest(data, answers, modal, overlay) {
   modalFooterTitle.textContent = "© 2024 AHA Music";
 
   modalFooter.appendChild(modalFooterTitle);
-
+  
+  modalContent.appendChild(modalHeader);
+  modalContent.appendChild(testContainer);
   modalContent.appendChild(modalFooter);
+
 
   modal.appendChild(modalContent);
 }
